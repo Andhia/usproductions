@@ -39,11 +39,13 @@ class BookingController extends Controller
         // Validasi input
         $validated = $request->validate([
             'customer_name' => 'required|string|max:255',
-            'date' => 'required|date',
             'email' => 'required|email|max:255',
             'service_id' => 'required|exists:services,id',
         ]);
 
+        // Set default date to today
+        $validated['date'] = now()->format('Y-m-d');
+        
         // Tambah status default booking
         $validated['status'] = 1;
 

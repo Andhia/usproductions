@@ -24,7 +24,6 @@ export default function CreateBooking({
         customer_name: "",
         email: "",
         service_id: "",
-        date: new Date().toISOString().split("T")[0], // Set default date to today
     });
 
     const [visibleSections, setVisibleSections] = useState({});
@@ -230,30 +229,7 @@ export default function CreateBooking({
                                     </div>
                                 </div>
 
-                                {/* Date Selection */}
-                                <div className="relative">
-                                    <label className="block text-sm font-semibold text-gray-700 mb-2">
-                                        <FaCalendarAlt className="inline mr-2 text-brown" />
-                                        Tanggal Booking
-                                    </label>
-                                    <input
-                                        type="date"
-                                        name="date"
-                                        value={data.date}
-                                        onChange={(e) =>
-                                            setData("date", e.target.value)
-                                        }
-                                        min={new Date().toISOString().split("T")[0]}
-                                        className="w-full px-4 py-4 bg-gray-50 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brown focus:border-brown transition-all duration-300"
-                                        required
-                                    />
-                                    {errors.date && (
-                                        <div className="text-red-600 text-sm mt-2 flex items-center">
-                                            <FaTimes className="mr-1" />
-                                            {errors.date}
-                                        </div>
-                                    )}
-                                </div>
+
 
                                 {/* Service Selection */}
                                 <div className="relative">
