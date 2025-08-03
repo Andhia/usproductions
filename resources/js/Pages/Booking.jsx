@@ -24,7 +24,7 @@ export default function CreateBooking({
         customer_name: "",
         email: "",
         service_id: "",
-        date: "",
+        date: new Date().toISOString().split("T")[0], // Set default date to today
     });
 
     const [visibleSections, setVisibleSections] = useState({});
@@ -73,16 +73,9 @@ export default function CreateBooking({
         e.preventDefault();
 
         post(route("booking.store"), {
-            onSuccess: () => {
-                Swal.fire({
-                    title: "Booking Berhasil!",
-                    text: "Silakan cek email Anda untuk detail lebih lanjut.",
-                    icon: "success",
-                    confirmButtonText: "OK",
-                    confirmButtonColor: "#8B4513",
-                }).then(() => {
-                    window.location.reload();
-                });
+            onSuccess: (response) => {
+                // Redirect langsung ke halaman payment tanpa SweetAlert
+                // Backend akan handle redirect ke payment page
             },
             onError: (errors) => {
                 Swal.fire({
@@ -235,6 +228,31 @@ export default function CreateBooking({
                                             </div>
                                         )}
                                     </div>
+                                </div>
+
+                                {/* Date Selection */}
+                                <div className="relative">
+                                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                                        <FaCalendarAlt className="inline mr-2 text-brown" />
+                                        Tanggal Booking
+                                    </label>
+                                    <input
+                                        type="date"
+                                        name="date"
+                                        value={data.date}
+                                        onChange={(e) =>
+                                            setData("date", e.target.value)
+                                        }
+                                        min={new Date().toISOString().split("T")[0]}
+                                        className="w-full px-4 py-4 bg-gray-50 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brown focus:border-brown transition-all duration-300"
+                                        required
+                                    />
+                                    {errors.date && (
+                                        <div className="text-red-600 text-sm mt-2 flex items-center">
+                                            <FaTimes className="mr-1" />
+                                            {errors.date}
+                                        </div>
+                                    )}
                                 </div>
 
                                 {/* Service Selection */}

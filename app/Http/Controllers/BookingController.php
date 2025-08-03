@@ -47,8 +47,8 @@ class BookingController extends Controller
         // Tambah status default booking
         $validated['status'] = 1;
 
-        // Simpan data booking
-        $booking = Booking::create();
+        // Simpan data booking dengan data yang sudah divalidasi
+        $booking = Booking::create($validated);
 
         // Redirect langsung ke halaman pembayaran (CustomerController@getPayment)
         return redirect()->route('payment.get', ['id' => $booking->id]);
